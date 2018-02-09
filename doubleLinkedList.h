@@ -10,10 +10,12 @@ public:
 	};
 	void start();
 	void printList(struct Node *node);
-	void append(struct Node **head_ref, int new_data);
+	void stackPush(struct Node **head_ref, int new_data);
 	void push(struct Node **head_ref, int new_data);
 	void getLastNode(struct Node **head_ref);
 	void pop(struct Node **head_ref);
+	void enqueue(struct Node **head_ref, int new_data);
+	void dequeue(struct Node **head_ref);
 	void createList(struct Node **head_ref, int amount, int range);
 	doubleLinkedList();
 	~doubleLinkedList();

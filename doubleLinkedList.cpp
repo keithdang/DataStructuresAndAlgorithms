@@ -10,13 +10,21 @@ void doubleLinkedList::start()
 	cout << "Double Linked List\n";
 	struct Node *node = NULL;
 	struct Node *lastNode = NULL;
-	createList(&node, 7, 10);
+	createList(&node, 8, 9);
 	printList(node);
 	lastNode = node;
 	getLastNode(&lastNode);
 	cout << "\nLastNode:" << lastNode->data << "\n";
 	pop(&lastNode);
 	cout << "Pop\nLastNode:" << lastNode->data << "\n";
+	printList(node);
+	
+	cout << "\nFirst Node:" << node->data << "\n";
+	enqueue(&node,7);
+	cout << "\nEnqueue Node:" << node->data << "\n";
+	printList(node);
+	cout << "\nDequeue\nNode:" << lastNode->data << "\n";
+	dequeue(&lastNode);
 	printList(node);
 }
 void doubleLinkedList::createList(struct Node **head_ref, int amount, int range)
@@ -36,13 +44,36 @@ void doubleLinkedList::createList(struct Node **head_ref, int amount, int range)
 			else
 			{
 				cout << "Append\n";
-				append(head_ref, randNum);
+				stackPush(head_ref, randNum);
 			}
 		}
 	}
 }
+void doubleLinkedList::enqueue(struct Node **head_ref, int new_data)
+{
+	struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
+
+	new_node->data = new_data;
+	new_node->next = (*head_ref);
+	new_node->prev = NULL;
+	if (*head_ref != NULL)
+	{
+		(*head_ref)->prev = new_node;
+	}
+	(*head_ref) = new_node;
+	return;
+}
+void doubleLinkedList::dequeue(struct Node **head_ref)
+{
+	(*head_ref) = (*head_ref)->prev;
+	(*head_ref)->next = NULL;
+}
 void doubleLinkedList::pop(struct Node **head_ref)
 {
+	while ((*head_ref)->next != NULL)
+	{
+		(*head_ref) = (*head_ref)->next;
+	}
 	(*head_ref) = (*head_ref) -> prev;
 	(*head_ref)->next = NULL;
 }
@@ -70,7 +101,7 @@ void doubleLinkedList::printList(struct Node *node)
 		last = last->prev;
 	}
 }
-void doubleLinkedList::push(struct Node **head_ref, int new_data)
+void doubleLinkedList::push(struct Node **head_ref, int new_data)//puts it at the beginning of the node
 {
 	struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
 	
@@ -84,8 +115,7 @@ void doubleLinkedList::push(struct Node **head_ref, int new_data)
 	(*head_ref) = new_node;
 	return;
 }
-
-void doubleLinkedList::append(struct Node **head_ref, int new_data)
+void doubleLinkedList::stackPush(struct Node **head_ref, int new_data)//this is a push in the stack
 {
 	struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
 	struct Node *last = *head_ref;
